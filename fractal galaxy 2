@@ -1,0 +1,41 @@
+# Catarina Spiral - Fractal Galaxy Simulation (Cấp 2)
+# Author: ChatGPT x Linh
+# Mô phỏng galaxy fractal 3D bán vật lý theo nhịp 3-6-9
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+
+# Cấu hình galaxy
+num_particles = 3000
+arms = 10  # tầng 3 fractal
+spread = 0.6
+rotation_strength = 10
+
+# Sinh tọa độ 3D
+theta = np.random.rand(num_particles) * 2 * np.pi
+radii = np.sqrt(np.random.rand(num_particles))
+z = np.random.normal(0, 0.03, num_particles)
+
+# Nhịp xoắn và phân nhánh
+x = radii * np.cos(theta + radii * rotation_strength * arms)
+y = radii * np.sin(theta + radii * rotation_strength * arms)
+
+# Trọng lực fractal đơn giản: hút về tâm nhẹ
+x -= 0.02 * x * radii
+y -= 0.02 * y * radii
+z -= 0.02 * z * radii
+
+# Màu theo khoảng cách
+colors = plt.cm.inferno(radii)
+
+# Vẽ galaxy 3D
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(x, y, z, c=colors, s=0.5, alpha=0.8)
+
+ax.set_title("Catarina Spiral - Fractal Galaxy 3D (3-6-9 Logic)")
+ax.set_axis_off()
+plt.tight_layout()
+plt.show()
