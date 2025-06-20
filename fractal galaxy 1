@@ -1,0 +1,30 @@
+# Catarina Spiral - Fractal Galaxy Simulation (Cấp 1)
+# Author: ChatGPT x Linh
+# Mô phỏng galaxy fractal dựa trên nhịp 3-6-9
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Cài đặt tham số fractal
+num_branches = 6         # Số nhánh chính
+points_per_branch = 300  # Số điểm trên mỗi nhánh
+
+# Tạo mối nhánh galaxy dựa theo spiral
+radii = np.linspace(0, 1, points_per_branch)
+theta_base = radii * 6 * np.pi  # nhân 6 cho spiral
+
+fig, ax = plt.subplots(figsize=(8, 8), subplot_kw={'projection': 'polar'})
+colors = plt.cm.plasma(np.linspace(0, 1, num_branches))
+
+for i in range(num_branches):
+    offset = (2 * np.pi / num_branches) * i
+    theta = theta_base + offset
+    noise = np.random.normal(0, 0.05, points_per_branch)
+    r = radii + noise
+    ax.plot(theta, r, color=colors[i], lw=0.8)
+
+ax.set_title("Catarina Spiral - Fractal Galaxy (3-6-9)", va='bottom')
+ax.grid(False)
+ax.set_axis_off()
+plt.tight_layout()
+plt.show()
